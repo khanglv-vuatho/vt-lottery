@@ -1,17 +1,11 @@
 import { Route, Routes } from 'react-router-dom'
 
 import IndexPage from '@/pages/index'
-import DocsPage from '@/pages/docs'
-import PricingPage from '@/pages/pricing'
-import BlogPage from '@/pages/blog'
-import AboutPage from '@/pages/about'
+import InvalidPage from './pages/invalid'
 
 const routes = [
   { path: '/', element: <IndexPage /> },
-  { path: '/docs', element: <DocsPage /> },
-  { path: '/pricing', element: <PricingPage /> },
-  { path: '/blog', element: <BlogPage /> },
-  { path: '/about', element: <AboutPage /> }
+  { path: '/invalid', element: <InvalidPage /> }
 ]
 
 function App() {
