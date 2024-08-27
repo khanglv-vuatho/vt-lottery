@@ -82,12 +82,6 @@ const postMessageCustom = ({ message }: { message: string }) => {
     ToastComponent({ message: message || 'has bug here', type: 'error' })
   }
 }
-function calculateQuestionMarkPercentage(arr: string[]): number {
-  const totalMarks = arr.reduce((acc, item) => acc + (item.match(/\?/g)?.length || 0), 0)
-  const totalCharacters = arr.reduce((acc, item) => acc + item.length, 0)
-
-  return 100 - (totalMarks / totalCharacters) * 100
-}
 
 function countNumbersAndQuestionMarks(arr: string[]): { numbers: number; questionMarks: number } {
   let numbers = 0
@@ -101,4 +95,4 @@ function countNumbersAndQuestionMarks(arr: string[]): { numbers: number; questio
   return { numbers, questionMarks }
 }
 
-export { useUnfocusItem, capitalizeWords, useDebounce, handleAddLangInUrl, formatLocalTime, formatDDMMYYYY, postMessageCustom, calculateQuestionMarkPercentage, countNumbersAndQuestionMarks }
+export { useUnfocusItem, capitalizeWords, useDebounce, handleAddLangInUrl, formatLocalTime, formatDDMMYYYY, postMessageCustom, countNumbersAndQuestionMarks }

@@ -1,22 +1,27 @@
-import { calculateQuestionMarkPercentage, countNumbersAndQuestionMarks } from '@/utils'
+import TicketItem from '@/components/TicketItem'
 import { Spinner } from '@nextui-org/react'
 import { ArrowLeft2, Profile2User, Ticket } from 'iconsax-react'
 import { useEffect, useState } from 'react'
 
 type TInfoTicket = {
   listTicket: string[][] | null
-  total: number
+  totalInvite: number
 }
 const Index = () => {
   const [isFetching, setIsFetching] = useState(false)
-  const [infoTicket, setInfoTicket] = useState<TInfoTicket>({ listTicket: null, total: 0 })
+  const [infoTicket, setInfoTicket] = useState<TInfoTicket>({ listTicket: null, totalInvite: 0 })
 
+  // TODO: API
   const handleGetTicket = async () => {
     try {
       // const data = await instance.get('/ticket')
       const fakeData = {
-        listTicket: [['??', '??', '??', '??', '??', '??']],
-        total: 12
+        listTicket: [
+          ['84', '13', '54', '72', '46', '3?'],
+          ['25', '90', '83', '56', '17', '49'],
+          ['70', '34', '95', '41', '87', '60']
+        ],
+        totalInvite: 12
       }
       setInfoTicket(fakeData)
     } catch (error) {
@@ -61,65 +66,13 @@ const Index = () => {
                 <span>
                   <Profile2User variant='Bold' />
                 </span>
-                <p className='text-2xl'>{infoTicket?.total}</p>
+                <p className='text-2xl'>{infoTicket?.totalInvite}</p>
               </div>
             </div>
           </div>
         </div>
         <div className='flex h-full flex-1 flex-col gap-4 overflow-y-auto rounded-t-2xl bg-white p-4'>{infoTicket?.listTicket?.map((item, index) => <TicketItem item={item} key={index} />)}</div>
       </div>
-    </div>
-  )
-}
-
-const TicketItem = ({ item }: { item: string[] }) => {
-  const { numbers, questionMarks } = countNumbersAndQuestionMarks(item)
-  return (
-    <div className='flex flex-col gap-2'>
-      <div className='flex w-full items-center justify-between text-sm'>
-        <p>
-          Đã giới thiệu: <span className='font-bold'>{numbers}</span>
-        </p>
-        <p>
-          Còn lại: <span className='font-bold'>{questionMarks}</span>
-        </p>
-      </div>
-
-      <ListTicketBall item={item} />
-    </div>
-  )
-}
-const ListTicketBall = ({ item }: { item: string[] }) => {
-  const percentage = calculateQuestionMarkPercentage(item)
-  return (
-    <div className='relative w-full overflow-hidden rounded-2xl bg-[#e4e4e4]'>
-      <div className='relative z-50 flex w-full items-center justify-center p-4'>
-        <div className='grid w-fit grid-cols-6 items-center justify-center gap-4'>
-          {item.map((item, index) => (
-            <Ball key={index} item={item} />
-          ))}
-        </div>
-      </div>
-      <div
-        className='absolute inset-0 w-[50%] blur-md'
-        style={{
-          background: 'linear-gradient(90deg, #00C070 0%, #2865FF 100%)',
-          width: `${percentage}%`
-        }}
-      ></div>
-    </div>
-  )
-}
-
-const Ball = ({ item }: { item: string }) => {
-  return (
-    <div
-      className='flex size-10 items-center justify-center rounded-full bg-primary-yellow text-sm font-bold'
-      style={{
-        background: 'radial-gradient(100% 100% at 0% 0%, #FFFFFF 0%, #FFFFFF 70.5%, #BFBFBF 100%)'
-      }}
-    >
-      {item}
     </div>
   )
 }
