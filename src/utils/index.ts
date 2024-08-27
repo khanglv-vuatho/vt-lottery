@@ -1,4 +1,5 @@
 import ToastComponent from '@/components/ToastComponent'
+import { Ticket } from '@/types'
 import moment from 'moment'
 import { useEffect, useRef, useState } from 'react'
 
@@ -83,13 +84,13 @@ const postMessageCustom = ({ message }: { message: string }) => {
   }
 }
 
-function countNumbersAndQuestionMarks(arr: string[]): { numbers: number; questionMarks: number } {
+function countNumbersAndQuestionMarks(arr: Ticket): { numbers: number; questionMarks: number } {
   let numbers = 0
   let questionMarks = 0
 
   arr.forEach((item) => {
-    numbers += item.match(/\d/g)?.length || 0
-    questionMarks += item.match(/\?/g)?.length || 0
+    numbers += item.toString().match(/\d/g)?.length || 0
+    questionMarks += item.toString().match(/\?/g)?.length || 0
   })
 
   return { numbers, questionMarks }

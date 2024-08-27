@@ -2,29 +2,17 @@ import { ButtonOnlyIcon } from '@/components/Buttons'
 import TicketItem from '@/components/TicketItem'
 import { keyPossmessage } from '@/constants'
 import instance from '@/services/axiosConfig'
+import { TicketData } from '@/types'
 import { postMessageCustom } from '@/utils'
 import { Spinner } from '@nextui-org/react'
 import { ArrowLeft2, Profile2User, Ticket } from 'iconsax-react'
-import { useEffect, useMemo, useState } from 'react'
-
-interface UserInfo {
-  id: number
-  full_name: string
-  avatar: string
-}
-
-interface TicketData {
-  total_ticket: number
-  tickets: string[][]
-  total_user_referral: number
-  info_user: UserInfo
-}
+import { useEffect, useState } from 'react'
 
 const Index = () => {
   const [isFetching, setIsFetching] = useState(false)
   const [ticketData, setTicketData] = useState<TicketData | null>(null)
 
-  const handleGetTicket = async () => {
+  const handleGetTicket = async (): Promise<void> => {
     try {
       const response = await instance.get<TicketData>('/referral/get-lottery')
 
@@ -34,6 +22,8 @@ const Index = () => {
       })
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsFetching(false)
     }
   }
 
@@ -49,7 +39,7 @@ const Index = () => {
     setIsFetching(true)
   }, [])
 
-  return ticketData === null ? (
+  return isFetching ? (
     <div className='flex h-dvh flex-col items-center justify-center bg-white'>
       <Spinner />
     </div>
@@ -62,6 +52,7 @@ const Index = () => {
               <ArrowLeft2 />
             </ButtonOnlyIcon>
             <p>Dãy số may mắn</p>
+            {/* // placeholder div*/}
             <div />
           </header>
           <div className='items-centser grid w-full grid-cols-2 gap-4 py-4 pt-2 text-white'>
@@ -85,7 +76,9 @@ const Index = () => {
             </div>
           </div>
         </div>
-        <div className='flex h-full flex-1 flex-col gap-4 overflow-y-auto rounded-t-2xl bg-white p-4'>{ticketData?.tickets.reverse().map((item, index) => <TicketItem item={item} key={index} />)}</div>
+        <div className='flex h-full flex-1 flex-col gap-4 overflow-y-auto rounded-t-2xl bg-white p-4'>
+          {ticketData?.tickets?.map((item, index) => <TicketItem item={item.data} key={index} ticketId={ticketData?.tickets?.[index].id} />)}
+        </div>
       </div>
     </div>
   )

@@ -1,32 +1,36 @@
-import { AnimatePresence, motion, Variants } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect } from 'react'
 import { twMerge } from 'tailwind-merge'
-
-type Direction = 'left' | 'top' | 'right'
 
 type Props = {
   isOpen: boolean
   children: React.ReactNode
-  direction?: Direction
-  className?: string
+  direction?: 'left' | 'top' | 'right' | 'bottom'
+  className?: string | undefined
 }
 
 const DropDownMenu: React.FC<Props> = ({ isOpen, children, className, direction = 'top' }) => {
-  const menuVariants: Variants = {
-    initial: { scale: 0, opacity: 0 },
-    animate: { scale: 1, opacity: 1 },
-    exit: { scale: 0, opacity: 0 }
+  const menuVariants = {
+    initial: direction === 'left' || direction === 'right' ? { x: direction === 'left' ? '-100%' : '100%' } : { scaleY: 0 },
+    animate: {
+      x: direction === 'left' || direction === 'right' ? 0 : undefined,
+      scaleY: direction === 'top' || direction === 'bottom' ? 1 : undefined,
+      transition: { ease: 'easeInOut', duration: 0.2 }
+    },
+    exit: {
+      x: direction === 'left' ? '-100%' : direction === 'right' ? '100%' : undefined,
+      scaleY: direction === 'top' || direction === 'bottom' ? 0 : undefined,
+      opacity: 0,
+      transition: { ease: 'easeInOut', duration: 0.2 }
+    }
   }
 
-  const originClass: Record<Direction, string> = {
-    top: 'origin-top',
-    left: 'origin-left',
-    right: 'origin-right'
-  }
+  const origin = { top: 'origin-top', left: 'origin-left', right: 'origin-right', bottom: 'origin-bottom' }
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : 'auto'
-    return () => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
       document.body.style.overflow = 'auto'
     }
   }, [isOpen])
@@ -39,11 +43,7 @@ const DropDownMenu: React.FC<Props> = ({ isOpen, children, className, direction 
           animate='animate'
           exit='exit'
           variants={menuVariants}
-          transition={{ duration: 0.2 }}
-          className={twMerge(
-            `3xl:top-[80px] 3xl:h-[calc(100dvh-80px)] fixed inset-x-0 top-[70px] z-[1000] flex h-[calc(100dvh-70px)] flex-col items-start gap-4 overflow-hidden p-2 ${originClass[direction]}`,
-            className
-          )}
+          className={twMerge(`fixed bottom-0 left-0 right-0 z-[1000] flex flex-col items-start gap-4 overflow-hidden p-2 ${origin[direction]}`, className)}
         >
           {children}
         </motion.div>
