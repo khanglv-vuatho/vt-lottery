@@ -1,5 +1,8 @@
+import { ButtonOnlyIcon } from '@/components/Buttons'
 import TicketItem from '@/components/TicketItem'
+import { keyPossmessage } from '@/constants'
 import instance from '@/services/axiosConfig'
+import { postMessageCustom } from '@/utils'
 import { Spinner } from '@nextui-org/react'
 import { ArrowLeft2, Profile2User, Ticket } from 'iconsax-react'
 import { useEffect, useMemo, useState } from 'react'
@@ -34,6 +37,10 @@ const Index = () => {
     }
   }
 
+  const handleCloseWebview = () => {
+    postMessageCustom({ message: keyPossmessage.CAN_POP })
+  }
+
   useEffect(() => {
     isFetching && handleGetTicket()
   }, [isFetching])
@@ -51,7 +58,9 @@ const Index = () => {
       <div className='flex h-full max-w-[390px] flex-col'>
         <div className='w-full'>
           <header className='flex w-full items-center justify-between py-4 font-bold text-white'>
-            <ArrowLeft2 />
+            <ButtonOnlyIcon onClick={handleCloseWebview} className='text-white'>
+              <ArrowLeft2 />
+            </ButtonOnlyIcon>
             <p>Dãy số may mắn</p>
             <div />
           </header>
