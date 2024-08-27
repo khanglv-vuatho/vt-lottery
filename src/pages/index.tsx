@@ -1,29 +1,34 @@
 import TicketItem from '@/components/TicketItem'
+import instance from '@/services/axiosConfig'
 import { Spinner } from '@nextui-org/react'
 import { ArrowLeft2, Profile2User, Ticket } from 'iconsax-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
-type TInfoTicket = {
-  listTicket: string[][] | null
-  totalInvite: number
+interface UserInfo {
+  id: number
+  full_name: string
+  avatar: string
 }
+
+interface TicketData {
+  total_ticket: number
+  tickets: string[][]
+  total_user_referral: number
+  info_user: UserInfo
+}
+
 const Index = () => {
   const [isFetching, setIsFetching] = useState(false)
-  const [infoTicket, setInfoTicket] = useState<TInfoTicket>({ listTicket: null, totalInvite: 0 })
+  const [ticketData, setTicketData] = useState<TicketData | null>(null)
 
-  // TODO: API
   const handleGetTicket = async () => {
     try {
-      // const data = await instance.get('/ticket')
-      const fakeData = {
-        listTicket: [
-          ['84', '13', '54', '72', '46', '3?'],
-          ['25', '90', '83', '56', '17', '49'],
-          ['70', '34', '95', '41', '87', '60']
-        ],
-        totalInvite: 12
-      }
-      setInfoTicket(fakeData)
+      const response = await instance.get<TicketData>('/referral/get-lottery')
+
+      setTicketData({
+        ...response.data,
+        tickets: [...response.data.tickets].reverse()
+      })
     } catch (error) {
       console.log(error)
     }
@@ -37,7 +42,7 @@ const Index = () => {
     setIsFetching(true)
   }, [])
 
-  return infoTicket.listTicket === null ? (
+  return ticketData === null ? (
     <div className='flex h-dvh flex-col items-center justify-center bg-white'>
       <Spinner />
     </div>
@@ -50,14 +55,14 @@ const Index = () => {
             <p>Dãy số may mắn</p>
             <div />
           </header>
-          <div className='grid w-full grid-cols-2 items-center gap-4 py-4 pt-2 text-white'>
+          <div className='items-centser grid w-full grid-cols-2 gap-4 py-4 pt-2 text-white'>
             <div className='flex flex-col gap-2 rounded-2xl bg-white/10 p-4'>
               <p className='text-sm font-normal'>Tổng</p>
               <div className='flex items-center gap-2'>
                 <span>
                   <Ticket variant='Bold' />
                 </span>
-                <p className='text-2xl'>{infoTicket?.listTicket?.length}</p>
+                <p className='text-2xl'>{ticketData?.total_ticket}</p>
               </div>
             </div>
             <div className='flex flex-col gap-2 rounded-2xl bg-white/10 p-4'>
@@ -66,12 +71,12 @@ const Index = () => {
                 <span>
                   <Profile2User variant='Bold' />
                 </span>
-                <p className='text-2xl'>{infoTicket?.totalInvite}</p>
+                <p className='text-2xl'>{ticketData?.total_user_referral}</p>
               </div>
             </div>
           </div>
         </div>
-        <div className='flex h-full flex-1 flex-col gap-4 overflow-y-auto rounded-t-2xl bg-white p-4'>{infoTicket?.listTicket?.map((item, index) => <TicketItem item={item} key={index} />)}</div>
+        <div className='flex h-full flex-1 flex-col gap-4 overflow-y-auto rounded-t-2xl bg-white p-4'>{ticketData?.tickets.reverse().map((item, index) => <TicketItem item={item} key={index} />)}</div>
       </div>
     </div>
   )

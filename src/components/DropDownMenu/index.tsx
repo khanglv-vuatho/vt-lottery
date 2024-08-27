@@ -1,27 +1,32 @@
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, Variants } from 'framer-motion'
 import { useEffect } from 'react'
 import { twMerge } from 'tailwind-merge'
+
+type Direction = 'left' | 'top' | 'right'
 
 type Props = {
   isOpen: boolean
   children: React.ReactNode
-  direction?: 'left' | 'top' | 'right'
-  className?: string | undefined
+  direction?: Direction
+  className?: string
 }
 
 const DropDownMenu: React.FC<Props> = ({ isOpen, children, className, direction = 'top' }) => {
-  const menuVariants = {
-    initial: direction === 'left' || direction === 'right' ? { scaleX: 0 } : { scaleY: 0 },
-    animate: direction === 'left' || direction === 'right' ? { scaleX: 1 } : { scaleY: 1 },
-    exit: direction === 'left' || direction === 'right' ? { scaleX: 0, opacity: 0 } : { scaleY: 0, opacity: 0 }
+  const menuVariants: Variants = {
+    initial: { scale: 0, opacity: 0 },
+    animate: { scale: 1, opacity: 1 },
+    exit: { scale: 0, opacity: 0 }
   }
 
-  const origin = { top: 'origin-top', left: 'origin-left', right: 'origin-right' }
+  const originClass: Record<Direction, string> = {
+    top: 'origin-top',
+    left: 'origin-left',
+    right: 'origin-right'
+  }
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
+    document.body.style.overflow = isOpen ? 'hidden' : 'auto'
+    return () => {
       document.body.style.overflow = 'auto'
     }
   }, [isOpen])
@@ -34,8 +39,9 @@ const DropDownMenu: React.FC<Props> = ({ isOpen, children, className, direction 
           animate='animate'
           exit='exit'
           variants={menuVariants}
+          transition={{ duration: 0.2 }}
           className={twMerge(
-            `3xl:top-[80px] 3xl:h-[calc(100dvh-80px)] fixed bottom-0 left-0 right-0 top-[70px] z-[1000] flex h-[calc(100dvh-70px)] flex-col items-start gap-4 overflow-hidden p-2 ${origin[direction]}`,
+            `3xl:top-[80px] 3xl:h-[calc(100dvh-80px)] fixed inset-x-0 top-[70px] z-[1000] flex h-[calc(100dvh-70px)] flex-col items-start gap-4 overflow-hidden p-2 ${originClass[direction]}`,
             className
           )}
         >
