@@ -1,6 +1,5 @@
 import { ButtonOnlyIcon } from '@/components/Buttons'
 import ListTicketBall from '@/components/ListTicketBall'
-import TicketItem from '@/components/TicketItem'
 import { keyPossmessage } from '@/constants'
 import instance from '@/services/axiosConfig'
 import { TicketData } from '@/types'
