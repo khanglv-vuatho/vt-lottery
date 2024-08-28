@@ -48,11 +48,7 @@ const Index = () => {
     setIsFetching(true)
   }, [])
 
-  return isFetching ? (
-    <div className='flex h-dvh flex-col items-center justify-center bg-white'>
-      <Spinner />
-    </div>
-  ) : (
+  return (
     <div className={`flex h-dvh flex-col items-center justify-between ${isClient ? 'bg-[#FFFAEA] text-primary-black' : 'bg-primary-blue text-white'} `}>
       <div className='flex h-full w-full max-w-[390px] flex-col'>
         <div className='w-full'>
