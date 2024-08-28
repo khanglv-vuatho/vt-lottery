@@ -1,12 +1,12 @@
 import Ball from '@/components/Ball'
+import instance from '@/services/axiosConfig'
+import { LotteryData, LotteryTicket, Ticket, TNumberInfo } from '@/types'
 import { calculateQuestionMarkPercentage } from '@/utils'
 import { Avatar } from '@nextui-org/react'
 import { ArrowLeft2 } from 'iconsax-react'
 import { memo, useEffect, useState } from 'react'
 import { ButtonOnlyIcon } from '../Buttons'
 import DropDownMenu from '../DropDownMenu'
-import { LotteryData, LotteryTicket, Ticket, TNumberInfo } from '@/types'
-import instance from '@/services/axiosConfig'
 
 const ListTicketBall = ({ item, ticketId }: { item: Ticket; ticketId: number }) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -31,6 +31,7 @@ const ListTicketBall = ({ item, ticketId }: { item: Ticket; ticketId: number }) 
   const handleGetTicketDetail = async () => {
     try {
       const response = await instance.get<LotteryData>(`/referral/detail-lottery/${ticketId}`)
+      // thêm num vào ticket
       const transformedData = {
         ...response.data,
         tickets: response.data.tickets.map((ticket) => ({

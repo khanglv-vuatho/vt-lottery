@@ -1,5 +1,5 @@
 import ToastComponent from '@/components/ToastComponent'
-import { Ticket } from '@/types'
+import { Ticket, TPostMessage } from '@/types'
 import moment from 'moment'
 import { useEffect, useRef, useState } from 'react'
 
@@ -74,16 +74,20 @@ const formatDDMMYYYY = (time: string) => {
   return moment(time).format('DD/MM/YYYY')
 }
 
-const postMessageCustom = ({ message }: { message: string }) => {
+const postMessageCustom = ({ message, data = {} }: TPostMessage) => {
   //@ts-ignore
   if (window?.vuatho) {
     //@ts-ignore
-    window?.vuatho?.postMessage(message)
+    window?.vuatho?.postMessage(
+      JSON.stringify({
+        message,
+        data
+      })
+    )
   } else {
     ToastComponent({ message: message || 'has bug here', type: 'error' })
   }
 }
-
 function countNumbersAndQuestionMarks(arr: Ticket): { numbers: number; questionMarks: number } {
   let numbers = 0
   let questionMarks = 0

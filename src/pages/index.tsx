@@ -31,7 +31,9 @@ const Index = () => {
   }
 
   const handleCloseWebview = () => {
-    postMessageCustom({ message: keyPossmessage.CAN_POP })
+    postMessageCustom({
+      message: keyPossmessage.CAN_POP
+    })
   }
 
   useEffect(() => {

@@ -43,3 +43,4 @@ export type LotteryData = {
   user_id: number
   tickets: LotteryTicket[]
 }
+export type TPostMessage = { message: string; data?: any }
