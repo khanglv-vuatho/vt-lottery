@@ -19,9 +19,12 @@ const Index = () => {
     try {
       const response = await instance.get<TicketData>('/referral/get-lottery')
 
+      //if tickets is empty, set tickets to [{ data: ['??', '??', '??', '??', '??', '??'], id: 0 }]
+      const tickets = response.data.tickets.length === 0 ? [{ data: ['??', '??', '??', '??', '??', '??'], id: 0 }] : [...response.data.tickets].reverse()
+
       setTicketData({
         ...response.data,
-        tickets: [...response.data.tickets].reverse()
+        tickets: tickets
       })
     } catch (error) {
       console.log(error)
