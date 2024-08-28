@@ -12,11 +12,13 @@ const Ball = ({ item, className }: { item: string; className?: string }) => {
       {item.split('').map((item, index) =>
         item === '?' ? (
           <span
-            style={{
-              borderStyle: 'inset'
-            }}
+            style={
+              {
+                // borderStyle: 'inset'
+              }
+            }
             key={index}
-            className='rounded-[2px] border border-gray-200 px-[2px] text-transparent'
+            className='rounded-[2px] border border-[#a6a6a6] px-[2px] text-transparent'
           >
             {item}
           </span>

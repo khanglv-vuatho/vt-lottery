@@ -48,7 +48,7 @@ const Index = () => {
     </div>
   ) : (
     <div className={`flex h-dvh flex-col items-center justify-between ${isClient ? 'bg-[#FFFAEA] text-primary-black' : 'bg-primary-blue text-white'} `}>
-      <div className='flex h-full max-w-[390px] flex-col'>
+      <div className='flex h-full w-full max-w-[430px] flex-col'>
         <div className='w-full'>
           <header className='flex w-full items-center justify-between py-4 font-bold'>
             <ButtonOnlyIcon onClick={handleCloseWebview} className='text-inherit'>
