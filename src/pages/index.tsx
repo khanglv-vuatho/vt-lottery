@@ -34,11 +34,6 @@ const Index = () => {
     }
   }
 
-  ToastComponent({
-    type: 'error',
-    message: JSON.stringify(ticketData)
-  })
-
   const handleCloseWebview = () => {
     postMessageCustom({
       message: keyPossmessage.CAN_POP
