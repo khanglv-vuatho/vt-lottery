@@ -2,7 +2,7 @@ import Ball from '@/components/Ball'
 import instance from '@/services/axiosConfig'
 import { LotteryData, LotteryTicket, Ticket, TNumberInfo } from '@/types'
 import { calculateQuestionMarkPercentage } from '@/utils'
-import { Avatar } from '@nextui-org/react'
+import { Avatar, Button } from '@nextui-org/react'
 import { ArrowLeft2 } from 'iconsax-react'
 import { memo, useEffect, useState } from 'react'
 import { ButtonOnlyIcon } from '../Buttons'
@@ -96,12 +96,9 @@ const ListTicketBall = ({ item, ticketId }: { item: Ticket; ticketId: number }) 
       </div>
       <DropDownMenu direction='right' isOpen={isOpenModal} onClose={handleCloseModal} className='size-full bg-white'>
         <div className='flex h-full w-full flex-col gap-2'>
-          <div className='flex items-center gap-2' onClick={handleCloseModal}>
-            <ButtonOnlyIcon>
-              <ArrowLeft2 />
-            </ButtonOnlyIcon>
+          <Button disableAnimation startContent={<ArrowLeft2 />} className='w-fit bg-transparent px-2' onClick={handleCloseModal}>
             <p className='font-bold text-primary-black'>Chi tiết dãy số</p>
-          </div>
+          </Button>
           <div className='flex h-full flex-col gap-4 overflow-auto'>
             {ticketDetail?.tickets.map((item, index) => <TicketDetail key={index} item={item} isFullQuestionNumber={item.num === '??'} isHasQuestionNumber={item.num.includes('?')} />)}
           </div>
