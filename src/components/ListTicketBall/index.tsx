@@ -16,7 +16,7 @@ const ListTicketBall = ({ item, ticketId }: { item: Ticket; ticketId: number }) 
   const [ticketDetail, setTicketDetail] = useState<LotteryData | null>(null)
 
   const queryParams = new URLSearchParams(location.search)
-  const isClient = queryParams.get('isClient')
+  const isClient = queryParams.get('isClient') === 'true'
 
   const ONE_HUNDRED_PERCENT = 100
   const WITDH_OF_BORDER_DOTS = 4
@@ -110,7 +110,7 @@ const ListTicketBall = ({ item, ticketId }: { item: Ticket; ticketId: number }) 
 
 const TicketDetail = memo(({ item, isHasQuestionNumber, isFullQuestionNumber }: { item: LotteryTicket; isHasQuestionNumber: boolean; isFullQuestionNumber: boolean }) => {
   const queryParams = new URLSearchParams(location.search)
-  const isClient = queryParams.get('isClient')
+  const isClient = queryParams.get('isClient') === 'true'
 
   // Nếu chỉ isFullQuestionNumber thì không cần có border và bg màu xám
   // Nếu isHasQuestionNumber thì có border

@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 
 const Index = () => {
   const queryParams = new URLSearchParams(location.search)
-  const isClient = queryParams.get('isClient')
+  const isClient = queryParams.get('isClient') === 'true'
 
   const [isFetching, setIsFetching] = useState(false)
   const [ticketData, setTicketData] = useState<TicketData | null>(null)
