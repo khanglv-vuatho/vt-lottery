@@ -13,7 +13,11 @@ const ListTicketBall = ({ item, ticketId }: { item: Ticket; ticketId: number }) 
   const percentage = calculateQuestionMarkPercentage(item as string[])
   const [isFetchingDetail, setIsFetchingDetail] = useState(false)
   const [ticketDetail, setTicketDetail] = useState<LotteryData | null>(null)
-  console.log({ item })
+
+  const queryParams = new URLSearchParams(location.search)
+  const isClient = queryParams.get('isClient')
+
+  const ONE_HUNDRED_PERCENT = 100
 
   const handleOpenModal = () => {
     setIsFetchingDetail(true)
@@ -47,9 +51,9 @@ const ListTicketBall = ({ item, ticketId }: { item: Ticket; ticketId: number }) 
   }, [isFetchingDetail])
 
   return (
-    <>
-      <div className='relative w-full overflow-hidden rounded-2xl bg-[#C33636]' onClick={handleOpenModal}>
-        <div className='relative z-50 flex w-full items-center justify-center p-4'>
+    <div>
+      <div className={`relative flex w-full items-center overflow-hidden rounded-2xl p-4 ${percentage === ONE_HUNDRED_PERCENT ? '' : 'bg-[#C33636]'} `} onClick={handleOpenModal}>
+        <div className='relative z-50 flex w-full items-center justify-center'>
           <div className='grid w-fit grid-cols-6 items-center justify-center gap-4'>
             {item.map((itemNumber, index) => (
               <Ball key={index} item={itemNumber.toString()} />
@@ -59,35 +63,45 @@ const ListTicketBall = ({ item, ticketId }: { item: Ticket; ticketId: number }) 
         <div
           className='absolute inset-0 -translate-x-3 -translate-y-3 blur-md'
           style={{
-            background: 'linear-gradient(90deg, #1646C0 0%, #1F51D3 100%)',
-            width: `calc(${percentage}% + 24px)`,
-            height: 'calc(100% + 24px)'
+            background: isClient ? 'linear-gradient(90deg, #F4B807 0%, #FFAA00 100%)' : 'linear-gradient(90deg, #1646C0 0%, #1F51D3 100%)',
+            width: `calc(${percentage}% + 32px)`,
+            height: 'calc(100% + 32px)'
           }}
         />
       </div>
-      <DropDownMenu direction='right' isOpen={isOpenModal} className='size-full bg-white'>
+      <DropDownMenu direction='right' isOpen={isOpenModal} onClose={handleCloseModal} className='size-full bg-white'>
         <div className='flex h-full w-full flex-col gap-2'>
           <div className='flex items-center gap-2' onClick={handleCloseModal}>
             <ButtonOnlyIcon>
               <ArrowLeft2 />
             </ButtonOnlyIcon>
-            <p className='font-bold'>Chi tiết dãy số</p>
+            <p className='font-bold text-primary-black'>Chi tiết dãy số</p>
           </div>
           <div className='flex h-full flex-col gap-4 overflow-auto'>
             {ticketDetail?.tickets.map((item, index) => <TicketDetail key={index} item={item} isFullQuestionNumber={item.num === '??'} isHasQuestionNumber={item.num.includes('?')} />)}
           </div>
         </div>
       </DropDownMenu>
-    </>
+    </div>
   )
 }
 
 const TicketDetail = memo(({ item, isHasQuestionNumber, isFullQuestionNumber }: { item: LotteryTicket; isHasQuestionNumber: boolean; isFullQuestionNumber: boolean }) => {
-  console.log({ isHasQuestionNumber })
+  const queryParams = new URLSearchParams(location.search)
+  const isClient = queryParams.get('isClient')
+
+  // Nếu chỉ isFullQuestionNumber thì không cần có border và bg màu xám
+  // Nếu isHasQuestionNumber thì có border
+  // Nếu số hoàn chỉnh thì fill màu background
+
   return (
     <div
       className={`flex w-full items-center gap-2 rounded-2xl border p-4 ${
-        isFullQuestionNumber ? 'border-transparent bg-[#F8F8F8]' : isHasQuestionNumber ? 'border-primary-blue text-primary-black' : 'bg-primary-blue text-white'
+        isFullQuestionNumber
+          ? 'border-transparent bg-[#F8F8F8]'
+          : isHasQuestionNumber
+            ? `${isClient ? 'border-primary-yellow' : 'border-primary-blue'} text-primary-black`
+            : `bg-gradient-to-r ${isClient ? 'from-[#F4B807] to-[#FFAA00]' : 'from-[#1646C0] to-[#1F51D3]'} text-white`
       }`}
     >
       <Ball item={item.num} className='text-primary-black' />

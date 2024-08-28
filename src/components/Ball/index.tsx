@@ -21,7 +21,9 @@ const Ball = ({ item, className }: { item: string; className?: string }) => {
             {item}
           </span>
         ) : (
-          <span key={index}>{item}</span>
+          <span key={index} className='font-bold text-primary-black'>
+            {item}
+          </span>
         )
       )}
     </div>

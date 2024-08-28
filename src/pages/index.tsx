@@ -1,4 +1,5 @@
 import { ButtonOnlyIcon } from '@/components/Buttons'
+import ListTicketBall from '@/components/ListTicketBall'
 import TicketItem from '@/components/TicketItem'
 import { keyPossmessage } from '@/constants'
 import instance from '@/services/axiosConfig'
@@ -9,6 +10,9 @@ import { ArrowLeft2, Profile2User, Ticket } from 'iconsax-react'
 import { useEffect, useState } from 'react'
 
 const Index = () => {
+  const queryParams = new URLSearchParams(location.search)
+  const isClient = queryParams.get('isClient')
+
   const [isFetching, setIsFetching] = useState(false)
   const [ticketData, setTicketData] = useState<TicketData | null>(null)
 
@@ -44,40 +48,40 @@ const Index = () => {
       <Spinner />
     </div>
   ) : (
-    <div className='flex h-dvh flex-col items-center justify-between bg-primary-blue'>
+    <div className={`flex h-dvh flex-col items-center justify-between ${isClient ? 'bg-[#FFFAEA] text-primary-black' : 'bg-primary-blue text-white'} `}>
       <div className='flex h-full max-w-[390px] flex-col'>
         <div className='w-full'>
-          <header className='flex w-full items-center justify-between py-4 font-bold text-white'>
-            <ButtonOnlyIcon onClick={handleCloseWebview} className='text-white'>
+          <header className='flex w-full items-center justify-between py-4 font-bold'>
+            <ButtonOnlyIcon onClick={handleCloseWebview} className='text-inherit'>
               <ArrowLeft2 />
             </ButtonOnlyIcon>
             <p>Dãy số may mắn</p>
             {/* // placeholder div*/}
             <div />
           </header>
-          <div className='items-centser grid w-full grid-cols-2 gap-4 py-4 pt-2 text-white'>
-            <div className='flex flex-col gap-2 rounded-2xl bg-white/10 p-4'>
+          <div className='items-centser grid w-full grid-cols-2 gap-4 px-3 py-4 pt-2 text-white'>
+            <div className={`flex flex-col gap-2 rounded-2xl p-4 ${isClient ? 'bg-[#FFD864] text-primary-black' : 'bg-white/10 text-white'}`}>
               <p className='text-sm font-normal'>Tổng</p>
               <div className='flex items-center gap-2'>
                 <span>
-                  <Ticket variant='Bold' />
+                  <Ticket variant={isClient ? 'Outline' : 'Bold'} />
                 </span>
-                <p className='text-2xl'>{ticketData?.total_ticket}</p>
+                <p className='text-2xl font-bold'>{ticketData?.total_ticket}</p>
               </div>
             </div>
-            <div className='flex flex-col gap-2 rounded-2xl bg-white/10 p-4'>
+            <div className={`flex flex-col gap-2 rounded-2xl p-4 ${isClient ? 'bg-[#FFD864] text-primary-black' : 'bg-white/10 text-white'}`}>
               <p className='text-sm font-normal'>Đã giới thiệu</p>
               <div className='flex items-center gap-2'>
                 <span>
-                  <Profile2User variant='Bold' />
+                  <Profile2User variant={isClient ? 'Outline' : 'Bold'} />
                 </span>
-                <p className='text-2xl'>{ticketData?.total_user_referral}</p>
+                <p className='text-2xl font-bold'>{ticketData?.total_user_referral}</p>
               </div>
             </div>
           </div>
         </div>
         <div className='flex h-full flex-1 flex-col gap-4 overflow-y-auto rounded-t-2xl bg-white p-4'>
-          {ticketData?.tickets?.map((item, index) => <TicketItem item={item.data} key={index} ticketId={ticketData?.tickets?.[index].id} />)}
+          {ticketData?.tickets?.map((item, index) => <ListTicketBall key={index} item={item.data} ticketId={item.id} />)}
         </div>
       </div>
     </div>
