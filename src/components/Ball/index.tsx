@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge'
 const Ball = ({ item, className }: { item: string; className?: string }) => {
   return (
     <div
-      className={twMerge('flex size-11 items-center justify-center gap-0.5 rounded-full text-sm font-bold', className)}
+      className={twMerge('flex size-[38px] items-center justify-center gap-[1px] rounded-full text-sm font-bold', className)}
       style={{
         background: 'radial-gradient(100% 100% at 0% 0%, #FFFFFF 0%, #FFFFFF 70.5%, #BFBFBF 100%)'
       }}
@@ -18,7 +18,7 @@ const Ball = ({ item, className }: { item: string; className?: string }) => {
               }
             }
             key={index}
-            className='rounded-[2px] border border-[#a6a6a6] px-[2px] text-transparent'
+            className='rounded-[2px] border border-[#a6a6a6] px-[2px] text-primary-black'
           >
             {item}
           </span>

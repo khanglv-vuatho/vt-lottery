@@ -7,6 +7,7 @@ import { ArrowLeft2 } from 'iconsax-react'
 import { memo, useEffect, useState } from 'react'
 import { ButtonOnlyIcon } from '../Buttons'
 import DropDownMenu from '../DropDownMenu'
+import ToastComponent from '../ToastComponent'
 
 const ListTicketBall = ({ item, ticketId }: { item: Ticket; ticketId: number }) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -18,8 +19,11 @@ const ListTicketBall = ({ item, ticketId }: { item: Ticket; ticketId: number }) 
   const isClient = queryParams.get('isClient')
 
   const ONE_HUNDRED_PERCENT = 100
+  const WITDH_OF_BORDER_DOTS = 4
+  const PADDING_OF_TICKET_DETAIL = 8
 
   const handleOpenModal = () => {
+    if (ticketId === 0) return ToastComponent({ message: 'Bạn chưa có dãy số nào', type: 'info' })
     setIsFetchingDetail(true)
     setIsOpenModal(true)
   }
@@ -53,9 +57,14 @@ const ListTicketBall = ({ item, ticketId }: { item: Ticket; ticketId: number }) 
 
   return (
     <div>
-      <div className={`relative flex w-full items-center overflow-hidden rounded-2xl p-4 ${percentage === ONE_HUNDRED_PERCENT ? '' : 'bg-[#C33636]'} `} onClick={handleOpenModal}>
+      <div className={`relative mx-auto flex w-fit items-center overflow-hidden p-2 ${percentage === ONE_HUNDRED_PERCENT ? '' : 'bg-[#C33636]'} `} onClick={handleOpenModal}>
         <div className='relative z-50 flex w-full items-center justify-center'>
-          <div className='grid w-fit grid-cols-6 items-center justify-center gap-4'>
+          <div
+            style={{
+              padding: PADDING_OF_TICKET_DETAIL
+            }}
+            className='grid w-fit grid-cols-6 items-center justify-center gap-4 border-1 border-white'
+          >
             {item.map((itemNumber, index) => (
               <Ball key={index} item={itemNumber.toString()} />
             ))}
@@ -65,10 +74,25 @@ const ListTicketBall = ({ item, ticketId }: { item: Ticket; ticketId: number }) 
           className='absolute inset-0 -translate-x-3 -translate-y-3 blur-md'
           style={{
             background: isClient ? 'linear-gradient(90deg, #F4B807 0%, #FFAA00 100%)' : 'linear-gradient(90deg, #1646C0 0%, #1F51D3 100%)',
-            width: `calc(${percentage}% + 32px)`,
+            width: percentage === 0 ? '0px' : `calc(${percentage}% + 32px)`,
             height: 'calc(100% + 32px)'
           }}
         />
+        {/*  */}
+        <div
+          style={{
+            borderTop: `${WITDH_OF_BORDER_DOTS}px dotted #fff`,
+            borderBottom: `${WITDH_OF_BORDER_DOTS}px dotted #fff`,
+            height: `calc(100% + ${WITDH_OF_BORDER_DOTS}px)`,
+            transform: `translateY(-${WITDH_OF_BORDER_DOTS / 2}px) translateX(${PADDING_OF_TICKET_DETAIL}px)`,
+            width: `calc(100% - ${PADDING_OF_TICKET_DETAIL * 2}px)`,
+            position: 'absolute',
+            inset: 0
+          }}
+          className={`absolute inset-0 w-[90%] border-dotted`}
+        />
+        <div className='absolute left-0 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white' />
+        <div className='absolute right-0 top-1/2 size-3 -translate-y-1/2 translate-x-1/2 rounded-full bg-white' />
       </div>
       <DropDownMenu direction='right' isOpen={isOpenModal} onClose={handleCloseModal} className='size-full bg-white'>
         <div className='flex h-full w-full flex-col gap-2'>

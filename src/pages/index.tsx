@@ -20,7 +20,7 @@ const Index = () => {
       const response = await instance.get<TicketData>('/referral/get-lottery')
 
       //if tickets is empty, set tickets to [{ data: ['??', '??', '??', '??', '??', '??'], id: 0 }]
-      const tickets = response.data.tickets.length === 0 ? [{ data: ['??', '??', '??', '??', '??', '??'], id: 0 }] : [...response.data.tickets].reverse()
+      const tickets = response?.data?.tickets?.length === 0 ? [{ data: ['??', '??', '??', '??', '??', '??'], id: 0 }] : [...response.data.tickets].reverse()
 
       setTicketData({
         ...response.data,
@@ -53,7 +53,7 @@ const Index = () => {
     </div>
   ) : (
     <div className={`flex h-dvh flex-col items-center justify-between ${isClient ? 'bg-[#FFFAEA] text-primary-black' : 'bg-primary-blue text-white'} `}>
-      <div className='flex h-full w-full max-w-[430px] flex-col'>
+      <div className='flex h-full w-full max-w-[390px] flex-col'>
         <div className='w-full'>
           <header className='flex w-full items-center justify-between py-4 font-bold'>
             <ButtonOnlyIcon onClick={handleCloseWebview} className='text-inherit'>
@@ -61,7 +61,9 @@ const Index = () => {
             </ButtonOnlyIcon>
             <p>Dãy số may mắn</p>
             {/* // placeholder div*/}
-            <div />
+            <ButtonOnlyIcon className='opacity-0' isDisabled>
+              <ArrowLeft2 />
+            </ButtonOnlyIcon>
           </header>
           <div className='items-centser grid w-full grid-cols-2 gap-4 px-3 py-4 pt-2 text-white'>
             <div className={`flex flex-col gap-2 rounded-2xl p-4 ${isClient ? 'bg-[#FFD864] text-primary-black' : 'bg-white/10 text-white'}`}>
@@ -70,7 +72,7 @@ const Index = () => {
                 <span>
                   <Ticket variant={isClient ? 'Outline' : 'Bold'} />
                 </span>
-                <p className='text-2xl font-bold'>{ticketData?.total_ticket}</p>
+                <p className='text-2xl font-bold'>{ticketData?.total_ticket || 0}</p>
               </div>
             </div>
             <div className={`flex flex-col gap-2 rounded-2xl p-4 ${isClient ? 'bg-[#FFD864] text-primary-black' : 'bg-white/10 text-white'}`}>
@@ -79,7 +81,7 @@ const Index = () => {
                 <span>
                   <Profile2User variant={isClient ? 'Outline' : 'Bold'} />
                 </span>
-                <p className='text-2xl font-bold'>{ticketData?.total_user_referral}</p>
+                <p className='text-2xl font-bold'>{ticketData?.total_user_referral || 0}</p>
               </div>
             </div>
           </div>
