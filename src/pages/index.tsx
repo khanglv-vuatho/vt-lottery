@@ -1,5 +1,6 @@
 import { ButtonOnlyIcon } from '@/components/Buttons'
 import ListTicketBall from '@/components/ListTicketBall'
+import ToastComponent from '@/components/ToastComponent'
 import { keyPossmessage } from '@/constants'
 import instance from '@/services/axiosConfig'
 import { TicketData } from '@/types'
@@ -32,6 +33,11 @@ const Index = () => {
       setIsFetching(false)
     }
   }
+
+  ToastComponent({
+    type: 'error',
+    message: JSON.stringify(ticketData)
+  })
 
   const handleCloseWebview = () => {
     postMessageCustom({
