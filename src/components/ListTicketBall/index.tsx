@@ -2,10 +2,11 @@ import Ball from '@/components/Ball'
 import instance from '@/services/axiosConfig'
 import { LotteryData, LotteryTicket, Ticket, TNumberInfo } from '@/types'
 import { calculateQuestionMarkPercentage } from '@/utils'
-import { Avatar, Button } from '@nextui-org/react'
+import { Button } from '@nextui-org/react'
 import { ArrowLeft2 } from 'iconsax-react'
 import { memo, useEffect, useState } from 'react'
 import DropDownMenu from '../DropDownMenu'
+import ImageCustom from '../ImageCustom'
 import ToastComponent from '../ToastComponent'
 
 const ONE_HUNDRED_PERCENT = 100
@@ -138,7 +139,11 @@ const UserInfo = memo(({ info, isHasQuestionNumber }: { info: TNumberInfo; isHas
   return (
     <div className='flex items-center gap-2'>
       <div className={`flex size-6 items-center justify-center rounded-full border font-bold ${isHasQuestionNumber ? 'border-primary-black' : 'border-white'}`}>{info?.number}</div>
-      {info?.avatar ? <Avatar src={info?.avatar || ''} size='md' /> : <div className='size-10 rounded-full bg-[#E4E4E4]' />}
+      {info?.avatar ? (
+        <ImageCustom src={info?.avatar || ''} height={40} width={40} className='size-10 max-h-10 max-w-10 rounded-full object-cover' />
+      ) : (
+        <div className='size-10 rounded-full bg-[#E4E4E4]' />
+      )}
       <p className={`text-sm ${!!info.user_name ? 'font-bold' : 'font-normal'}`}>{info?.user_name || 'Chưa có'}</p>
     </div>
   )

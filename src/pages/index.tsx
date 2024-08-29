@@ -7,7 +7,6 @@ import { TicketData } from '@/types'
 import { postMessageCustom } from '@/utils'
 import { ArrowLeft2, Profile2User, Ticket } from 'iconsax-react'
 import { useEffect, useState } from 'react'
-import CountUp from 'react-countup'
 
 const Index = () => {
   const queryParams = new URLSearchParams(location.search)

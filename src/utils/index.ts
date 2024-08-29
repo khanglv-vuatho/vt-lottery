@@ -2,6 +2,7 @@ import ToastComponent from '@/components/ToastComponent'
 import { Ticket, TPostMessage } from '@/types'
 import moment from 'moment'
 import { useEffect, useRef, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 const useUnfocusItem = (callback: () => void, exclusionRef?: React.RefObject<HTMLElement | null>): React.RefObject<any> => {
   const itemRef = useRef<any>(null)
