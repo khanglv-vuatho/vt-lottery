@@ -1,13 +1,13 @@
 import { ButtonOnlyIcon } from '@/components/Buttons'
-import ListTicketBall from '@/components/ListTicketBall'
-import ToastComponent from '@/components/ToastComponent'
+import CountUpRandomNumber from '@/components/CountUpRandomNumber'
+import ListTicketBall, { SkeletonTicket } from '@/components/ListTicketBall'
 import { keyPossmessage } from '@/constants'
 import instance from '@/services/axiosConfig'
 import { TicketData } from '@/types'
 import { postMessageCustom } from '@/utils'
-import { Spinner } from '@nextui-org/react'
 import { ArrowLeft2, Profile2User, Ticket } from 'iconsax-react'
 import { useEffect, useState } from 'react'
+import CountUp from 'react-countup'
 
 const Index = () => {
   const queryParams = new URLSearchParams(location.search)
@@ -69,7 +69,7 @@ const Index = () => {
                 <span>
                   <Ticket variant={isClient ? 'Outline' : 'Bold'} />
                 </span>
-                <p className='text-2xl font-bold'>{ticketData?.total_ticket || 0}</p>
+                <p className='text-2xl font-bold'>{isFetching ? <CountUpRandomNumber targetNumber={1000} /> : ticketData?.total_ticket || 0}</p>
               </div>
             </div>
             <div className={`flex flex-col gap-2 rounded-2xl p-4 ${isClient ? 'bg-[#FFD864] text-primary-black' : 'bg-white/10 text-white'}`}>
@@ -78,13 +78,15 @@ const Index = () => {
                 <span>
                   <Profile2User variant={isClient ? 'Outline' : 'Bold'} />
                 </span>
-                <p className='text-2xl font-bold'>{ticketData?.total_user_referral || 0}</p>
+                <p className='text-2xl font-bold'>{isFetching ? <CountUpRandomNumber targetNumber={1000} /> : ticketData?.total_user_referral || 0}</p>
               </div>
             </div>
           </div>
         </div>
         <div className='flex h-full flex-1 flex-col gap-4 overflow-y-auto rounded-t-2xl bg-white p-4'>
-          {ticketData?.tickets?.map((item, index) => <ListTicketBall key={index} item={item.data} ticketId={item.id} />)}
+          {isFetching
+            ? Array.from({ length: 6 }).map((_, index) => <SkeletonTicket key={index} />)
+            : ticketData?.tickets?.map((item, index) => <ListTicketBall key={index} item={item.data} ticketId={item.id} />)}
         </div>
       </div>
     </div>
