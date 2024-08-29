@@ -157,13 +157,15 @@ const TicketDetail = memo(({ item, isHasQuestionNumber, isFullQuestionNumber }: 
 const UserInfo = memo(({ info, isHasQuestionNumber }: { info: TNumberInfo; isHasQuestionNumber: boolean }) => {
   return (
     <div className='flex items-center gap-2'>
-      <div className={`flex size-6 items-center justify-center rounded-full border font-bold ${isHasQuestionNumber ? 'border-primary-black' : 'border-white'}`}>{info?.number}</div>
+      <div className={`flex size-6 items-center justify-center rounded-full border font-bold ${isHasQuestionNumber ? 'border-primary-black text-primary-black' : 'border-white text-white'}`}>
+        {info?.number}
+      </div>
       {info?.avatar ? (
         <ImageCustom src={info?.avatar || ''} height={40} width={40} className='size-10 max-h-10 max-w-10 rounded-full object-cover' />
       ) : (
         <div className='size-10 rounded-full bg-[#E4E4E4]' />
       )}
-      <p className={`text-sm ${!!info.user_name ? 'font-bold' : 'font-normal'}`}>{info?.user_name || 'Chưa có'}</p>
+      <p className={`${isHasQuestionNumber ? 'text-primary-black' : 'text-white'} text-sm ${!!info.user_name ? 'font-bold' : 'font-normal'}`}>{info?.user_name || 'Chưa có'}</p>
     </div>
   )
 })

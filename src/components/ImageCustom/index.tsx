@@ -10,9 +10,11 @@ interface ImageCustomProps extends ImageProps {
 
 const ImageCustom = forwardRef(({ src, alt, className, ...props }: ImageCustomProps, ref: Ref<HTMLImageElement>) => {
   const [isLoading, setIsLoading] = useState(true)
+
   const handleOnLoadImage = () => {
     setIsLoading(false)
   }
+
   return (
     <>
       <Image removeWrapper className={twMerge(`pointer-events-none select-none rounded-none ${isLoading ? 'block' : 'hidden'}`, className)} ref={ref} src={src + '?width=10&height=10'} alt={alt} />
@@ -20,7 +22,7 @@ const ImageCustom = forwardRef(({ src, alt, className, ...props }: ImageCustomPr
         removeWrapper
         className={twMerge(`pointer-events-none select-none rounded-none ${isLoading ? 'hidden' : 'block'}`, className)}
         ref={ref}
-        src={src + '?width=100&height=100'}
+        src={src + '?width=1000&height=1000'}
         alt={alt}
         {...props}
         onLoad={handleOnLoadImage}
