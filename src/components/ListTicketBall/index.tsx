@@ -98,7 +98,26 @@ const ListTicketBall = ({ item, ticketId }: { item: Ticket; ticketId: number }) 
             <p className='font-bold text-primary-black'>Chi tiết dãy số</p>
           </Button>
           <div className='flex h-full flex-col gap-4 overflow-auto'>
-            {ticketDetail?.tickets.map((item, index) => <TicketDetail key={index} item={item} isFullQuestionNumber={item.num === '??'} isHasQuestionNumber={item.num.includes('?')} />)}
+            {isFetchingDetail ? (
+              <div className='flex h-[130px] w-full animate-pulse items-center gap-2 rounded-2xl bg-gray-600/10 p-4'>
+                <div className='size-[38px] rounded-full bg-gray-400/20'></div>
+                <div className={`h-[56px] w-[23px] border-1 border-gray-400/20 border-r-transparent`} />
+                <div className='flex flex-col gap-2'>
+                  <div className='flex items-center gap-2'>
+                    <div className='flex size-6 flex-shrink-0 rounded-full bg-gray-400/20' />
+                    <div className='size-10 flex-shrink-0 rounded-full bg-gray-400/20' />
+                    <div className='h-[20px] w-[100px] rounded-full bg-gray-400/20' />
+                  </div>
+                  <div className='flex items-center gap-2'>
+                    <div className='flex size-6 flex-shrink-0 rounded-full bg-gray-400/20' />
+                    <div className='size-10 flex-shrink-0 rounded-full bg-gray-400/20' />
+                    <div className='h-[20px] w-[100px] rounded-full bg-gray-400/20' />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              ticketDetail?.tickets.map((item, index) => <TicketDetail key={index} item={item} isFullQuestionNumber={item.num === '??'} isHasQuestionNumber={item.num.includes('?')} />)
+            )}
           </div>
         </div>
       </DropDownMenu>
