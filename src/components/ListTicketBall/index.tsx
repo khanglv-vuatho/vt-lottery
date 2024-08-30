@@ -8,10 +8,7 @@ import { memo, useEffect, useState } from 'react'
 import DropDownMenu from '../DropDownMenu'
 import ImageCustom from '../ImageCustom'
 import ToastComponent from '../ToastComponent'
-
-const ONE_HUNDRED_PERCENT = 100
-const WITDH_OF_BORDER_DOTS = 4
-const PADDING_OF_TICKET_DETAIL = 8
+import { ONE_HUNDRED_PERCENT, PADDING_OF_TICKET_DETAIL, WITDH_OF_BORDER_DOTS } from '@/constants'
 
 const ListTicketBall = ({ item, ticketId }: { item: Ticket; ticketId: number }) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -170,7 +167,7 @@ const UserInfo = memo(({ info, isHasQuestionNumber }: { info: TNumberInfo; isHas
   )
 })
 
-export const SkeletonTicket = () => {
+export const SkeletonTicket = memo(() => {
   return (
     <div className='relative h-[72px] w-full animate-pulse bg-gray-600/10'>
       <div className='absolute left-0 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white' />
@@ -187,6 +184,6 @@ export const SkeletonTicket = () => {
       />
     </div>
   )
-}
+})
 
 export default memo(ListTicketBall)
