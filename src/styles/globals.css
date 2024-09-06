@@ -41,3 +41,14 @@ body {
   touch-action: manipulation;
   -ms-touch-action: manipulation;
 }
+
+.fontCarena {
+  font-family: 'Carena', sans-serif;
+}
+
+@font-face {
+  font-family: 'Carena';
+  src: url('../fonts/Carena-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
