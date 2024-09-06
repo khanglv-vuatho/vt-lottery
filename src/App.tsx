@@ -4,11 +4,11 @@ import { Suspense } from 'react'
 import { CircularProgress } from '@nextui-org/react'
 import { lazy } from 'react'
 
-const IndexPage = lazy(() => import('@/pages/index'))
+const HomePage = lazy(() => import('@/pages/index'))
 const InvalidPage = lazy(() => import('./pages/invalid'))
 
 const routes = [
-  { path: '/', element: <IndexPage /> },
+  { path: '/', element: <HomePage /> },
   { path: '/invalid', element: <InvalidPage /> }
 ]
 

@@ -43,12 +43,29 @@ body {
 }
 
 .fontCarena {
-  font-family: 'Carena', sans-serif;
+  font-family: 'DM Serif Display', sans-serif;
 }
 
 @font-face {
-  font-family: 'Carena';
-  src: url('../fonts/Carena-Regular.otf') format('opentype');
+  font-family: 'DM Serif Display';
+  src: url('../fonts/DMSerifDisplay-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Serif Display';
+  src: url('../fonts/DMSerifDisplay-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Serif Display';
+  src: url('../fonts/DMSerifDisplay-Regular.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
