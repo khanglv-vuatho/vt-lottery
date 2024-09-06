@@ -7,8 +7,9 @@ import TicketDetail from '@/components/TicketDetail'
 import { memo, useEffect, useState } from 'react'
 import { Ticket } from '@/components/Icons'
 import Ball from '@/components/Ball'
+import ToastComponent from '../ToastComponent'
 
-const ListTicketNumber = ({ index, ticket }: { index: number; ticket: Tickets }) => {
+const ListTicketNumber = ({ index, ticket, isDisable }: { index: number; ticket: Tickets; isDisable: boolean }) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [isFetchingDetail, setIsFetchingDetail] = useState(false)
   const [ticketDetail, setTicketDetail] = useState<LotteryData | null>(null)
@@ -17,6 +18,13 @@ const ListTicketNumber = ({ index, ticket }: { index: number; ticket: Tickets })
   }
 
   const handleOpenModal = () => {
+    if (isDisable) {
+      ToastComponent({
+        message: 'Hiện tại bạn chưa có số nào',
+        type: 'info'
+      })
+      return
+    }
     setIsOpenModal(true)
     setIsFetchingDetail(true)
   }

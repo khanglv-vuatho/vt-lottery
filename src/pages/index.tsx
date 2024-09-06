@@ -69,7 +69,7 @@ const HomePage = () => {
             </ButtonOnlyIcon>
           </header>
         </div>
-        <div className={`absolute bottom-0 left-0 right-0 z-[100] flex w-full flex-col gap-4 bg-white p-5 py-12 pb-5 duration-200 ${isExpand ? 'h-[70dvh]' : 'h-[40dvh] delay-100'}`}>
+        <div className={`absolute bottom-0 left-0 right-0 z-[100] flex w-full flex-col gap-4 bg-white p-5 py-12 pb-5 duration-200 ${isExpand ? 'h-[67dvh]' : 'h-[40dvh] delay-100'}`}>
           <ButtonOnlyIcon onClick={handleToggleExpand} className='absolute -top-[28px] left-1/2 z-[200] flex w-fit -translate-x-1/2 -translate-y-[100%]'>
             <ArrowDownSvg className={`${isExpand ? '' : 'rotate-180'} h-[10px] w-[25px] text-white duration-200`} />
           </ButtonOnlyIcon>
