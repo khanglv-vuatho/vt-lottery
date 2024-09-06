@@ -14,9 +14,8 @@ import { twMerge } from 'tailwind-merge'
 
 const Test = () => {
   const [isFetching, setIsFetching] = useState(false)
-  const [isExpand, setIsExpand] = useState(false)
+  const [isExpand, setIsExpand] = useState(true)
   const [ticketData, setTicketData] = useState<TicketData | null>(null)
-  const [isActiveTab, setIsActiveTab] = useState<'your-ticket' | 'recommended-ticket'>('recommended-ticket')
 
   const handleGetTicket = async (): Promise<void> => {
     try {
@@ -52,8 +51,6 @@ const Test = () => {
   useEffect(() => {
     setIsFetching(true)
   }, [])
-
-  console.log({ ticketData })
 
   return (
     <div className='h-dvh'>
