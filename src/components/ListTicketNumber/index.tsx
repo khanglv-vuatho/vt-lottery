@@ -8,6 +8,7 @@ import { memo, useEffect, useState } from 'react'
 import { Ticket } from '@/components/Icons'
 import Ball from '@/components/Ball'
 import ToastComponent from '../ToastComponent'
+import BackgroundGradient from '@/components/BackgroundGradient'
 
 const ListTicketNumber = ({ index, ticket, isDisable }: { index: number; ticket: Tickets; isDisable: boolean }) => {
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -80,7 +81,15 @@ const ListTicketNumber = ({ index, ticket, isDisable }: { index: number; ticket:
       <div className='relative mx-auto'>
         <Ticket className='size-full' />
         <div className='absolute inset-0 flex w-full items-center justify-center'>
-          <div className='absolute grid w-full max-w-[90%] grid-cols-6 gap-1'>{ticket?.data?.map((item, index) => <Ball isActive={item.toString().includes('?')} key={index} number={item} />)}</div>
+          <div className='absolute grid w-full max-w-[90%] grid-cols-6 gap-1'>
+            {ticket?.data?.map((item, index) => {
+              return (
+                <BackgroundGradient isHiddenAnimation={!item?.toString()?.includes('?')}>
+                  <Ball isActive={item?.toString()?.includes('?')} key={index} number={item} />
+                </BackgroundGradient>
+              )
+            })}
+          </div>
         </div>
       </div>
     </div>

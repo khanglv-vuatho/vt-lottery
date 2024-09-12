@@ -9,6 +9,7 @@ const TicketDetail = ({ item }: { item: LotteryTicket }) => {
     <div className='flex items-center justify-center px-3'>
       <div className='relative flex size-[92px] max-h-[92px] min-h-[92px] min-w-[92px] max-w-[92px] items-center justify-center rounded-s-lg border-1 border-r-0 border-[#FFB05D] bg-gradient-to-r from-[#FEAB0B] to-[#FFE86D]'>
         <Ball isActive={item?.num.includes('?')} number={item?.num} className='size-16 text-4xl' />
+
         {/* start line  */}
         <div className='absolute right-0 h-[68%] translate-x-1/2 border-r-1 border-dashed border-r-[#FFB05D]' />
         {/* end line  */}
